@@ -1,0 +1,27 @@
+<%= form_with(model: @gym_class, local: true) do |f| %>
+
+    <% if @gym_class.errors.present? %>
+        <p class="form-errors" >
+            <%= @gym_class.errors.full_messages.join(", ") %>
+        </p>
+    <% end %>
+
+    <div>
+        <%= f.label :class_type %> <br>
+        <%= f.text_field :class_type %>
+    </div>
+    <div>
+        <%= f.label :description %> <br>
+        <%= f.text_area :description, cols: 50, rows: 10 %>
+    </div>
+    <div>
+        <%= f.label :maximum_clients %> <br>
+        <%= f.text_field :maximum_clients %>
+    </div>
+    <div>
+        <%= f.label :cost %> <br>
+        <%= f.text_field :cost %>
+    </div>
+
+    <%= f.submit "Create Gym Class" %>
+<% end %>

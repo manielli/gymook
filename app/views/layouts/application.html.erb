@@ -9,9 +9,16 @@
     <%= javascript_include_tag 'application' %>
   </head>
   <body>
-    <main>
+    <header>
       <%= link_to("Home Page", root_path) %>
+      |
+      <%= link_to("New Gym Class", new_gym_class_path) %>
+      |
+      <%= link_to("Gym Classes", gym_classes_path ) %>
+    </header>
+
+    <main>
+      <%= yield %>
     </main>
-    <%= yield %>
   </body>
 </html>

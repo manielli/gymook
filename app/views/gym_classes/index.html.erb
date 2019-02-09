@@ -1,0 +1,16 @@
+<ul class="gym_class-list">
+    <% @gym_classes.each do |gym_class| %>
+        <li>
+            <%= link_to(gym_class.class_type, gym_class_path(gym_class.id)) %>
+            <small>
+                Cost: $<%= gym_class.cost %>
+            </small> <br>
+            <small>
+                Maximum Clients per class: <%= gym_class.maximum_clients %>
+            </small> <br>
+            <small>
+                Created at: <%= gym_class.created_at %>
+            </small> <br> <br> <br>
+        </li>
+    <% end %>
+</ul>
