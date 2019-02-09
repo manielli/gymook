@@ -8,8 +8,10 @@
     <%= stylesheet_link_tag    'application', media: 'all' %>
     <%= javascript_include_tag 'application' %>
   </head>
-
   <body>
+    <main>
+      <%= link_to("Home Page", root_path) %>
+    </main>
     <%= yield %>
   </body>
 </html>
