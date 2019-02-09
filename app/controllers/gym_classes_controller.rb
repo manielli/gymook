@@ -8,7 +8,7 @@ class GymClassesController < ApplicationController
         @gym_class = GymClass.new gym_class_params
 
         if @gym_class.save
-            redirect_to gym_glass_path(@gym_class.id)
+            redirect_to gym_class_path(@gym_class.id)
         else
             render :new
         end
