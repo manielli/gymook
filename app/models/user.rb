@@ -12,11 +12,16 @@ class User < ApplicationRecord
         presence: true
     )
 
-    validate(
+    validates(
         :email,
         presence: true,
         uniqueness: true,
         format: /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
+    )
+
+    validates(
+        :date_of_birth,
+        presence: true,
     )
 
     def self.search search_term
