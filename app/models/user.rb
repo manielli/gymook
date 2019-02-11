@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+    validate :date_of_birth_must_not_be_a_future_date, on: [:create, :update]
 
     has_secure_password
 
@@ -21,7 +22,7 @@ class User < ApplicationRecord
 
     validates(
         :date_of_birth,
-        presence: true,
+        presence: true
     )
 
     def self.search search_term
@@ -32,5 +33,12 @@ class User < ApplicationRecord
 
     def full_name
         "#{full_name} #{last_name}".strip
+    end
+
+    private
+    def date_of_birth_must_not_be_a_future_date
+        if date_of_birth.present? && date_of_birth > Date.today
+        errors.add(:date_of_birth, "must not be in the future")
+        end
     end
 end

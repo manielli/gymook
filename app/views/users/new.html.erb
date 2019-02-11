@@ -1,0 +1,45 @@
+<h1>Sign Up</h1>
+<form class="m-2 form-group">
+    <%= form_with(model: @user, local: true) do |f| %>
+
+        <% if @user.errors.any? %>
+            <p>
+                <%= @user.errors.full_messages.join(", ") %>
+            </p>
+        <% end  %>
+
+        <div>
+            <%= f.label :first_name, class: "control-label" %>
+            <%= f.text_field :first_name, class: "form-control" %>
+        </div>
+
+        <div>
+            <%= f.label :last_name, class: "control-label" %>
+            <%= f.text_field :last_name, class: "form-control" %>
+        </div>
+
+        <div>
+            <%= f.label :email, class: "control-label" %>
+            <%= f.email_field :email, class: "form-control" %>
+        </div>
+
+        <div>
+            <%= f.label :date_of_birth, class: "control-label" %>
+            <%= f.text_field :date_of_birth, class: "form-control" %>
+        </div>
+
+        <div>
+            <%= f.label :password, class: "control-label" %>
+            <%= f.password_field :password, class: "form-control" %>
+        </div>
+
+        <div>
+            <%= f.label :password_confirmation, class: "control-label" %>
+            <%= f.password_field :password_confirmation, class: "form-control" %>
+        </div>
+
+
+        <br>
+        <%= f.submit "Sign Up", class: "btn btn-primary bg-light text-primary" %>
+    <% end %>
+</form>
