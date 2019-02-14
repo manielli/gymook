@@ -8,19 +8,18 @@ class OccurencesController < ApplicationController
         @occurence = Occurence.new occurence_params
         @occurence.gym_class = @gym_class
 
-        @occurence.user = current_user
+
         if @occurence.save
-            redirect_to gym_class_path(@occurence)
+            redirect_to gym_class_path(@gym_class)
         else
+            flash[:danger] = "Oops, something went wrong, occurence couldn't be created..."
             @occurences = @gym_class.occurences.order(created_at: :desc)
         end
     end
 
-    def 
-
     def destroy
         @occurence.destroy
-        redirect_to gym_class_path(@occurence)
+        redirect_to gym_class_path(@occurence.gym_class)
     end
 
 

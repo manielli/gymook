@@ -32,7 +32,7 @@ class Ability
     alias_action(:create, :edit, :update, :delete, to: :crud)
 
     can(:crud, GymClass) do |gym_class|
-      gym_class.user == user || gym_class.user.role == "Coach"
+      gym_class.user == user || user.role == "Coach"
     end
 
     can(:view_new, GymClass) do |gym_class|
@@ -40,7 +40,7 @@ class Ability
     end
 
     can(:crud, Occurence) do |occurence|
-      occurence.user == user || occurence.gym_class.role == "Coach"
+      occurence.gym_class.user == user || user.role == "Coach"
     end
   end
 end

@@ -32,6 +32,9 @@ class GymClassesController < ApplicationController
     end
 
     def show
+        @occurence = Occurence.new
+
+        @occurences = @gym_class.occurences.order(created_at: :desc)
     end
 
     def edit
