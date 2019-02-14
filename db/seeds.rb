@@ -7,16 +7,62 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 GymClass.destroy_all
+User.destroy_all
+
+PASSWORD = "supersecret"
+
+
+
+10.times do
+    first_name = Faker::Name.first_name
+    last_name = Faker::Name.last_name
+    
+    User.create(
+        first_name: first_name,
+        last_name: last_name,
+        email: "#{first_name.downcase}-#{last_name.downcase}@#{Faker::Company.name.downcase}.com",
+        password: PASSWORD,
+        date_of_birth: Faker::Date.birthday(25, 40).strftime("%Y-%m-%d"),
+        role: "Coach"
+    )
+end
+
+users = User.all
 
 10.times do
     created_at = Faker::Date.backward(365 * 2)
-
+    
     gc = GymClass.create(
         class_type: ["MuayHIIT", "MuayFit", "MuayThai", "Kickboxing", "Core Builder"].sample,
-        maximum_clients: rand(1..15),
-        description: Faker::Lorem.sentences(1, true),
+        maximum_clients: rand(10..15),
+        description: Faker::Lorem.sentence(3, true, 3),
         cost: ["20","25","15"].sample,
         created_at: created_at,
-        updated_at: created_at
+        updated_at: created_at,
+        user: users.sample
+        ) 
+end
+
+
+100.times do
+    first_name = Faker::Name.first_name
+    last_name = Faker::Name.last_name
+    
+    User.create(
+        first_name: first_name,
+        last_name: last_name,
+        email: "#{first_name.downcase}-#{last_name.downcase}@#{Faker::Company.name.downcase}.com",
+        password: PASSWORD,
+        date_of_birth: Faker::Date.birthday(18, 65).strftime("%Y-%m-%d"),
+        role: "Client"
     )
 end
+
+super_user = User.create(
+    first_name: "Jon",
+    last_name: "Snow",
+    email: "js@winterfell.gov",
+    password: "daenerystargaryen",
+    date_of_birth: "1987-02-03",
+    admin: true
+)

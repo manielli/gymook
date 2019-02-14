@@ -4,11 +4,31 @@
 
 <div>
     <small>
-        Priced at: $<%= @gym_class.cost %>
+        • Priced at: $<%= @gym_class.cost %> •
     </small>
     <small>
-        Created at: <%= @gym_class.created_at %>
+        Created by Coach <%= @gym_class.user&.full_name || "Delete" %> •
     </small>
+    <small>
+        <% if can?(:edit, @gym_class) %>
+            <%= link_to("Edit", edit_gym_class_path(@gym_class.id)) %>
+            •
+        <% end %>
+    </small>
+    <small>
+        <% if can?(:delete, @gym_class) %>
+            <%= link_to(
+                "Delete", 
+                gym_class_path, 
+                method: :delete, 
+                data: {
+                    confirm: "Are you sure you want to delete this Gym Class?"
+            }) %>
+        <% end %>
+    </small> <br>
+    <small>
+        Created at: <%= @gym_class.created_at %>
+    </small> <br>
     <small>
         Updated: <%= @gym_class.updated_at %>
     </small>

@@ -6,10 +6,12 @@ class UsersController < ApplicationController
 
     def create
         @user = User.new user_params
-
         if @user.save
-            redirect_to root_path, notice: "Signed Up"
+            session[:user_id] = @user.id
+            redirect_to root_path
+            flash[:primary] = "You successfully signed up"
         else
+            flash[:danger] = "Oops, something went wrong"
             render :new
         end
     end

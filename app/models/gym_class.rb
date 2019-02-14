@@ -1,4 +1,6 @@
 class GymClass < ApplicationRecord
+    belongs_to :user
+    
     validates(
         :class_type,
         presence: true,

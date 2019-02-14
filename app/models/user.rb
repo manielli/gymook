@@ -1,5 +1,6 @@
 class User < ApplicationRecord
-    validate :date_of_birth_must_not_be_a_future_date, on: [:create, :update]
+    has_many :gym_classes
+    validate :date_of_birth_must_not_be_a_future_date, on: [:create]
 
     has_secure_password
 
@@ -32,7 +33,7 @@ class User < ApplicationRecord
     end
 
     def full_name
-        "#{full_name} #{last_name}".strip
+        "#{first_name} #{last_name}".strip
     end
 
     private
