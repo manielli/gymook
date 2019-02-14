@@ -38,5 +38,9 @@ class Ability
     can(:view_new, GymClass) do |gym_class|
       user.role == "Coach" 
     end
+
+    can(:crud, Occurence) do |occurence|
+      occurence.user == user || occurence.gym_class.role == "Coach"
+    end
   end
 end
