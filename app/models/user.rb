@@ -38,8 +38,8 @@ class User < ApplicationRecord
 
     private
     def date_of_birth_must_not_be_a_future_date
-        if date_of_birth.present? && date_of_birth > Date.today
-            errors.add(:date_of_birth, "must not be in the future")
+        if date_of_birth.present? && date_of_birth >= Time.zone.today
+            errors.add(:date_of_birth, "must not be today or in the future")
         end
     end
 end

@@ -10,11 +10,12 @@ class OccurencesController < ApplicationController
 
 
         if @occurence.save
-            redirect_to gym_class_path(@gym_class)
+            flash[:success] = "The occurence was successfully created..."
         else
-            flash[:danger] = "Oops, something went wrong, occurence couldn't be created..."
             @occurences = @gym_class.occurences.order(created_at: :desc)
+            flash[:danger] = "Oops, something went wrong, occurence couldn't be created..."
         end
+        redirect_to gym_class_path(@gym_class)
     end
 
     def destroy
