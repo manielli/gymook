@@ -1,5 +1,9 @@
 class ApplicationController < ActionController::Base
 
+    def find_gym_class
+        gym_class = GymClass.find(user: current_user) 
+    end
+
     def current_user
         if session[:user_id].present?
             @current_user ||= User.find_by(id: session[:user_id])

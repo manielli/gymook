@@ -1,6 +1,7 @@
 class User < ApplicationRecord
     has_many :gym_classes
     validate :date_of_birth_must_not_be_a_future_date, on: [:create]
+    has_many :bookings
 
     has_secure_password
 

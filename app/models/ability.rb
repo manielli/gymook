@@ -42,5 +42,9 @@ class Ability
     can(:crud, Occurence) do |occurence|
       occurence.gym_class.user == user || user.role == "Coach"
     end
+
+    can(:book, Occurence) do |occurence|
+      occurence.booking.user == user || user.role == "Coach"
+    end
   end
 end

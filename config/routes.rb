@@ -4,11 +4,15 @@ Rails.application.routes.draw do
 
 
   resource :session, only: [:new, :create, :destroy]
-  resources :users, only: [:new, :create]
+  resources :users, only: [:new, :create, :show]
 
-
-  resources :gym_classes do
-    resources :occurences
+  resources :occurences do
+    resources :bookings, only: [:create, :destroy, :show, :index]
   end
 
+  resources :gym_classes do
+    resources :occurences, only: [:create, :destroy] do
+      resources :bookings, only: [:create, :destroy, :show, :index]
+    end
+  end
 end
