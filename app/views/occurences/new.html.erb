@@ -1,0 +1,9 @@
+<h5>Create an occurence for <%= @gym_class.class_type %>: </h5>
+
+<%= simple_form_for [@gym_class, @occurence] do |f|  %>
+    <%= f.input :start_time %>
+
+    <%= f.input :end_time %>
+
+    <%= f.submit "Create Occurence", class: "btn btn-secondary bg-light text-secondary" %>
+<% end %>

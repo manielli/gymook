@@ -18,14 +18,25 @@ class BookingsController < ApplicationController
     end
 
     def show
-
+        occurence = Occurence.find params[:id]
+        booking = occurence.booking.find_by(user: current_user, occurence: occurence.id)
     end
 
     def index
-
+        
     end
 
     def destroy
+        booking = current_user.bookings.find(params[:id])
+        gym_class = booking.occurence.gym_class
 
+        if can?(:delete, booking)
+            booking.destroy
+            flash[:success] = "You booking has been cancelled!"
+        else
+            flash[:danger] = "We couldn't cancel your booking, something went wrong..."
+        end
+
+        redirect_to gym_class_path(gym_class.id)
     end
 end

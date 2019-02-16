@@ -1,0 +1,17 @@
+<h1>
+    The <%= @occurence.gym_class.class_type %> on 
+    <%= @occurence.start_time.strftime("%A") %> 
+    <%= @occurence.start_time.strftime("%b") %>.
+    <%= @occurence.start_time.strftime("%-d") %>: 
+
+</h1>
+
+<p>
+    This <%= @occurence.gym_class.class_type %> class starts on 
+    <%= @occurence.start_time.strftime("%A") %> 
+    <%=@occurence.start_time.strftime("%l:%M%P")  %> and 
+    ends at <%= @occurence.end_time.strftime("%l:%M%P") %>.
+</p>
+
+
+<h2>Here are the bookings placed for this <%= @occurence.gym_class.class_type %> class:</h2>

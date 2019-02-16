@@ -10,7 +10,7 @@
   </head>
   <body>
     <header>
-      <nav class="navbar navbar-expand-lg navbar-light bg-light text-primary" >
+      <nav class="navbar navbar-expand-lg navbar-light bg-light text-secondary" >
         <a href="#" class="navbar-brand text-secondary">Logo</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="toggle-navigation" >
           <span class="navbar-toggler-icon"></span>
@@ -18,16 +18,16 @@
         <div class="collape navbar-collapse" id="navbarNav" >
           <ul class="navbar-nav" >
             <li class="nav-item" >
-                <%= link_to("Home Page", root_path, class: "nav-link text-primary") %>
+                <%= link_to("Home Page", root_path, class: "nav-link text-secondary") %>
             </li>
-            <% if can?(:view_new, @gym_class) %>
+            <% if user_is_coach? %>
             <li class="nav-item" >
-                <%= link_to("New Gym Class", new_gym_class_path, class: "nav-link text-primary") %>
+                <%= link_to("New Gym Class", new_gym_class_path, class: "nav-link text-secondary") %>
+            </li>
+            <li class="nav-item" >
+                <%= link_to("Gym Classes", gym_classes_path, class: "nav-link text-secondary" ) %>
             </li>
             <% end %>
-            <li class="nav-item" >
-                <%= link_to("Gym Classes", gym_classes_path, class: "nav-link text-primary" ) %>
-            </li>
             <% if user_signed_in? %>
               <li class="nav-item" >
                 Hi <%= current_user.first_name %>
@@ -40,15 +40,15 @@
                   data: {
                     confirm: "Are you sure you want to Log Out?"
                   },
-                  class: "nav-link text-primary"
+                  class: "nav-link text-secondary"
                 ) %>
               </li>
             <% else %>
               <li class="nav-item">
-                <%= link_to("Sign In", new_session_path, class: "nav-link text-primary") %>
+                <%= link_to("Sign In", new_session_path, class: "nav-link text-secondary") %>
               </li>
               <li class="nav-item" >
-                <%= link_to("Sign Up", new_user_path, class: "nav-link text-primary") %>
+                <%= link_to("Sign Up", new_user_path, class: "nav-link text-secondary") %>
               </li>
             <% end %>
           </ul>

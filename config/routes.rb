@@ -6,12 +6,12 @@ Rails.application.routes.draw do
   resource :session, only: [:new, :create, :destroy]
   resources :users, only: [:new, :create, :show]
 
-  resources :occurences do
+  resources :occurences, only: [] do
     resources :bookings, only: [:create, :destroy, :show, :index]
   end
 
   resources :gym_classes do
-    resources :occurences, only: [:create, :destroy] do
+    resources :occurences, only: [:new, :create, :show, :index, :destroy] do
       resources :bookings, only: [:create, :destroy, :show, :index]
     end
   end

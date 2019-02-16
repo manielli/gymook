@@ -1,21 +1,40 @@
 class OccurencesController < ApplicationController
-    before_action :find_occurence, only: [:destroy]
-    before_action :authenticate_user!
+    before_action :find_occurence, only: [:show, :destroy]
+    before_action :authenticate_user!, except: [:show, :index]
     before_action :authorize_user!, only: [:destroy]
 
+    def new
+        @occurence = Occurence.new
+        @gym_class = GymClass.find(params[:gym_class_id])
+        user = current_user
+        if can?(:create, @occurence)
+            render :new
+        else
+            flash[:danger] = "Access Denied, you must be a coach to do this..."
+            redirect_to root_path
+        end
+    end
+
     def create
-        @gym_class = GymClass.find params[:gym_class_id]
+        # byebug
         @occurence = Occurence.new occurence_params
-        @occurence.gym_class = @gym_class
+        gym_class = GymClass.find(params[:gym_class_id])
+        @occurence.gym_class = gym_class
 
-
-        if @occurence.save
+        if @occurence.save && can?(:create, @occurence) 
             flash[:success] = "The occurence was successfully created..."
         else
-            @occurences = @gym_class.occurences.order(created_at: :desc)
             flash[:danger] = "Oops, something went wrong, occurence couldn't be created..."
         end
-        redirect_to gym_class_path(@gym_class)
+        redirect_to gym_class_occurence_path(gym_class, @occurence)
+    end
+
+    def show
+    end
+
+    def index
+        @gym_class = GymClass.find(params[:gym_class_id])
+        @occurences = @gym_class.occurences.all.order(created_at: :desc)
     end
 
     def destroy
@@ -36,7 +55,7 @@ class OccurencesController < ApplicationController
     def authorize_user!
         unless can?(:crud, @occurence)
             flash[:danger] = "Access Denied"
-            redirect_to gym_class_path(@occurence.gym_class)
+            redirect_to root_path
         end
     end
 end

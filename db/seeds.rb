@@ -33,14 +33,26 @@ users = User.all
     created_at = Faker::Date.backward(365 * 2)
     
     gc = GymClass.create(
-        class_type: ["MuayHIIT", "MuayFit", "MuayThai", "Kickboxing", "Core Builder"].sample,
+        class_type: ["MuayHIIT", "MuayFit", "MuayThai", "Kickboxing", "Core Builder", "Zumba", "Yoga", "Spin"].sample,
         maximum_clients: rand(10..15),
         description: Faker::Lorem.sentence(3, true, 3),
         cost: ["20","25","15"].sample,
         created_at: created_at,
         updated_at: created_at,
         user: users.sample
-        ) 
+        )
+        
+    if gc.valid?
+        rand(0..25).times do
+            start_time = Faker::Time.forward(31, :evening)
+            end_time = start_time.strftime("%Y-%m-%d #{(start_time.strftime("%H").to_i+1).to_s}:%M:%S -0800")
+
+            gc.occurences << Occurence.new(
+                start_time: start_time,
+                end_time: end_time
+            )
+        end
+    end
 end
 
 

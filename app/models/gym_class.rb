@@ -1,7 +1,7 @@
 class GymClass < ApplicationRecord
     belongs_to :user
 
-    has_many :occurences
+    has_many :occurences, dependent: :destroy
 
     validates(
         :class_type,

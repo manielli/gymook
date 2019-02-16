@@ -1,9 +1,10 @@
 class Occurence < ApplicationRecord
   belongs_to :gym_class
+
   validate :start_time_must_not_be_in_the_past, on: :create
   validate :end_time_must_not_be_before_start_time, on: :create
   
-  has_many :bookings
+  has_many :bookings, dependent: :destroy
 
   validates(
     :start_time,
@@ -17,7 +18,6 @@ class Occurence < ApplicationRecord
 
   private
   def start_time_must_not_be_in_the_past
-    puts Date.today
     if start_time.present? && start_time < DateTime.current
       errors.add(:start_time, "can not be in the past!")
     end

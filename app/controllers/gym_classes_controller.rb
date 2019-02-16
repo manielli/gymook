@@ -1,16 +1,16 @@
 class GymClassesController < ApplicationController
-    before_action :find_gym_class, only: [:show, :edit, :update, :destroy]
+    before_action :find_gym_class, only: [:edit, :update, :show, :destroy]
     before_action :authenticate_user!, except: [:index, :show]
-    before_action :authorize_user!, only: [:edit, :update, :destroy] 
+    before_action :authorize_user!, only: [:show, :edit, :destroy]
 
     def new
         @gym_class = GymClass.new
         user = current_user
-        if can?(:view_new, @gym_class)
+        if can?(:create, @gym_class)
             render :new
         else
             flash[:danger] = "Access Denied!"
-            redirect_to gym_classes_path
+            redirect_to root_path
         end
     end
 
@@ -28,13 +28,9 @@ class GymClassesController < ApplicationController
 
     def index
         @gym_classes = GymClass.all.order(created_at: :desc)
-        render :index
     end
 
     def show
-        @occurence = Occurence.new
-
-        @occurences = @gym_class.occurences.order(created_at: :desc)
     end
 
     def edit
@@ -65,7 +61,7 @@ class GymClassesController < ApplicationController
     def authorize_user!
         unless can?(:crud, @gym_class)
             flash[:danger] = "Access Denied!"
-            redirect_to gym_class_path(@gym_class.id)
+            redirect_to root_path
         end
     end
 end

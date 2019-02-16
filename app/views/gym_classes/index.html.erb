@@ -1,7 +1,8 @@
 <ul class="gym_class-list">
     <% @gym_classes.each do |gym_class| %>
         <li>
-            <%= link_to(gym_class.class_type, gym_class_path(gym_class.id)) %>
+            <%= link_to(gym_class.class_type, gym_class_path(gym_class.id), class: "text-secondary") %>
+            <br>
             <small>
                 Cost: $<%= gym_class.cost %>
             </small> <br>
@@ -10,7 +11,14 @@
             </small> <br>
             <small>
                 Created at: <%= gym_class.created_at %>
-            </small> <br> <br> <br>
+            </small> <br>
+            <small>
+                <%= link_to("New Occurence", new_gym_class_occurence_path(gym_class.id), class: "text-secondary" ) %>
+            </small> <br>
+            <small>
+                <%= link_to("All Occurences", gym_class_occurences_path(gym_class.id), class: "text-secondary") %>
+            </small>
+            <br> <br> <br>
         </li>
     <% end %>
 </ul>

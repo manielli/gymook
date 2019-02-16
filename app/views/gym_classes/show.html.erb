@@ -11,7 +11,7 @@
     </small>
     <small>
         <% if can?(:edit, @gym_class) %>
-            <%= link_to("Edit", edit_gym_class_path(@gym_class.id)) %>
+            <%= link_to("Edit", edit_gym_class_path(@gym_class.id), class: "text-secondary") %>
             •
         <% end %>
     </small>
@@ -21,6 +21,7 @@
                 "Delete", 
                 gym_class_path, 
                 method: :delete, 
+                class: "text-secondary", 
                 data: {
                     confirm: "Are you sure you want to delete this Gym Class?"
             }) %>
@@ -33,34 +34,3 @@
         Updated: <%= @gym_class.updated_at %>
     </small>
 </div>
-
-<h5>Create occurences of this gym class</h5>
-
-<%= simple_form_for [@gym_class, @occurence] do |f|  %>
-    <%= f.input :start_time %>
-
-    <%= f.input :end_time %>
-
-    <%= f.submit "Create Occurence", class: "btn btn-primary bg-light text-primary" %>
-<% end %>
-
-<h5>Occurences of this Gym Class</h5>
-<% @occurences.each do |occurence| %>
-    <li id="<%= dom_id(occurence) %>%" >
-        <%= occurence.start_time %> <br>
-        <%= occurence.end_time %> <br>
-
-        <% if can?(:delete, occurence) %>
-            <small>
-                <%= link_to(
-                    "Delete Occurence", 
-                    gym_class_occurence_path(@gym_class.id, occurence.id),
-                    method: :delete,
-                    data: {
-                        confirm: "Are you sure you want to delete this occurence?"
-                    }
-                ) %>
-            </small>
-        <% end %>
-    </li>
-<% end %>
