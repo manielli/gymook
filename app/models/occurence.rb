@@ -24,7 +24,7 @@ class Occurence < ApplicationRecord
   end
 
   def end_time_must_not_be_before_start_time
-    if start_time.present? && end_time.present? && end_time < start_time
+    if start_time.present? && end_time.present? && end_time <= start_time
       errors.add(:end_time, "can not be before the start time!")
     end
   end

@@ -1,32 +1,51 @@
-<h4>Occurences of <%= @gym_class.class_type %></h4>
+<h4> Classes</h4>
 <% @occurences.each do |occurence| %>
     <li id="<%= dom_id(occurence) %>" >
         <h6>
-            The <%= occurence.gym_class.class_type %> on 
+            <% if user_is_coach? %>
+                <%= link_to(
+                    occurence.gym_class.class_type ,
+                    gym_class_path(occurence.gym_class.id),
+                    class: "text-secondary"
+                )%>
+            <% else %>
+            <%= occurence.gym_class.class_type %>
+            <% end %>
+            Class on 
             <%= occurence.start_time.strftime("%A") %> 
             <%= occurence.start_time.strftime("%b") %>.
             <%= occurence.start_time.strftime("%-d") %>: 
 
         </h6>
-
         <p>
-            This <%= link_to(occurence.gym_class.class_type, gym_class_occurence_path(@gym_class.id, occurence.id), class: "text-secondary") %> 
-            class starts on 
+            This class starts on 
             <%= occurence.start_time.strftime("%A") %> at 
             <%=occurence.start_time.strftime("%l:%M%P")  %> and 
             ends at <%= occurence.end_time.strftime("%l:%M%P") %>.
-        </p>
-        <% if can?(:delete, occurence) %>
             <small>
-                <%= link_to(
-                    "Delete Occurence",
-                    gym_class_occurence_path(@gym_class.id, occurence.id),
-                    method: :delete,
-                    data: {
-                        confirm: "Are you sure you want to delete this occurence?"
-                    }, class: "text-secondary"
-                ) %>
+                <% booking = occurence.bookings.find_by(user: current_user) %>
+                <% if booking.present? %>
+                    <%= link_to(
+                        "Cancel Booking", 
+                        booking_path(booking.id), 
+                        method: :delete, 
+                        data: {
+                            confirm: "Are you sure you want to cancel this booking?"
+                        },
+                        class: "text-secondary" 
+                    )%>
+                <% else %>
+                    <%= link_to(
+                        "Book Class", 
+                        occurence_bookings_path(occurence.id), 
+                        method: :post, 
+                        data: {
+                            confirm: "Are you sure want to book this class?"
+                        },
+                        class: "text-secondary"
+                    )%>
+                <% end %>
             </small>
-        <% end %>
+        </p>
     </li>
 <% end %>

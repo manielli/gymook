@@ -1,42 +1,44 @@
 class BookingsController < ApplicationController
-    before_actions :authenticate_user!
+    before_action :authenticate_user!
 
     def create
         occurence = Occurence.find(params[:occurence_id])
         gym_class = occurence.gym_class
         booking = Booking.new(occurence: occurence, user: current_user)
 
-        if !can?(:book, occurence)
-            flash[:warning] = "We couldn't complete your booking"
-        elsif booking.save
+        if booking.save
             flash[:success] = "Your class was successfully booked"
         else
             flash[:danger] = booking.errors.full_messages.join(", ")
         end
 
-        redirect_to gym_class_path(gym_class.id)
+        redirect_to occurences_path
     end
 
-    def show
-        occurence = Occurence.find params[:id]
-        booking = occurence.booking.find_by(user: current_user, occurence: occurence.id)
-    end
-
-    def index
-        
-    end
 
     def destroy
         booking = current_user.bookings.find(params[:id])
-        gym_class = booking.occurence.gym_class
+        ocuurence = booking.occurence
+        gym_class = ocuurence.gym_class
 
-        if can?(:delete, booking)
-            booking.destroy
-            flash[:success] = "You booking has been cancelled!"
-        else
-            flash[:danger] = "We couldn't cancel your booking, something went wrong..."
+        booking.destroy
+        flash[:success] = "You booking was successfully cancelled"
+        redirect_to occurences_path
+    end
+
+    private
+    def booking_params
+        params.require(:booking)
+    end
+
+    def find_booking
+        @booking = Booking.find(params[:id])
+    end
+
+    def authorize_user!
+        unless can?(:crud, @booking)
+            flash[:danger] = "You are not allowed to make this booking..."
+            redirect_to occurences_path
         end
-
-        redirect_to gym_class_path(gym_class.id)
     end
 end
