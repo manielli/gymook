@@ -2,9 +2,9 @@
 
 <%= simple_form_for [@gym_class, @occurence] do |f|  %>
     
-    <%= f.input :start_time %>
+    <%= f.input :start_time, start_year: Date.today.year, end_year: Date.today.year + 1 %>
 
-    <%= f.input :end_time %>
+    <%= f.input :end_time, start_year: Date.today.year, end_year: Date.today.year + 1 %>
 
     <%= f.submit "Create Occurence", class: "btn btn-secondary bg-light text-secondary" %>
 <% end %>

@@ -3,8 +3,29 @@
 <ul class="user-list">
     <% @users.each do |user| %>
         <li>
-            <%= link_to(user.full_name, user_path(user.id), class: "text-secondary") %>
-            
-        </li>
+            <strong>
+                <%= link_to(user.full_name, user_path(user.id), class: "text-secondary") %>
+            </strong>
+            <small>
+                •
+                <%= link_to(
+                    "Edit User Details", 
+                    edit_user_path(user), 
+                    class: "text-secondary" 
+                ) %> 
+            </small>
+            <% if user_is_admin? %>
+                •
+                <%= link_to(
+                    "Delete User", 
+                    user_path(user), 
+                    method: :delete, 
+                    data: {
+                        confirm: "Are you sure you want to delete this user?"
+                    },
+                    class: "text-secondary" 
+                ) %>
+            <% end %>
+        </li> <br>
     <% end %>
 </ul>

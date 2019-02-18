@@ -8,6 +8,7 @@ class UsersController < ApplicationController
 
     def create
         @user = User.new user_params
+        @user.role = "Client"
         if @user.save
             session[:user_id] = @user.id
             redirect_to root_path
@@ -18,14 +19,7 @@ class UsersController < ApplicationController
         end
     end
 
-    def show
-        if can?(:crud, current_user)
-            @user = User.find(params[:id])
-        else
-            flash[:danger] = "Access Denied!"
-        end
-    end
-
+    
     def index
         if can?(:crud, current_user)
             @users = User.all.order(first_name: :asc)
@@ -33,10 +27,48 @@ class UsersController < ApplicationController
             flash[:danger] = "Access Denied!"
         end
     end
+    
+    def show
+        if can?(:crud, current_user) || current_user == @user
+            @user = User.find(params[:id])
+        end
+    end
 
+    def edit
+        if can?(:crud, current_user) || current_user == @user
+            @user = User.find(params[:id])
+        else
+            flash[:danger] = "Access Denied!"
+            redirect_to user_path(@user)
+        end
+    end
+
+    def update
+        if can?(:crud, current_user) || current_user == @user
+            if @user.update user_params
+                redirect_to user_path(@user)
+                flash[:success] = "User details have been successfully updated."
+            else
+                render :edit
+                flash[:danger] = "Access Denied! Couldn't update user details!"
+            end
+        end
+    end
+
+    def destroy
+        if can?(:crud, current_user)
+            @user.destroy
+            redirect_to users_path
+            flash[:success] = "User was successfully deleted"
+        end
+    end
 
     private
     def user_params
         params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, :role, :date_of_birth)
+    end
+
+    def find_user
+        @user = User.find(params[:id])
     end
 end

@@ -1,4 +1,4 @@
-<h1>Sign Up</h1>
+<h1>Edit details:</h1>
 
 <%#= form_with(model: @user, local: true) do |f| %>
 <%= simple_form_for @user do |f| %>
@@ -7,12 +7,12 @@
             <%#= @user.errors.full_messages.join(", ") %>
         <%#/p%>
     <%# end  %>
-    <%= f.input :first_name %>
+    <%= f.input :first_name, disabled: true %>
     <%#div class="form-group" %>
         <%#= f.label :first_name %>
         <%#= f.text_field :first_name, class: "form-control", placeholder: "Enter you first name here" %>
     <%#/div%>
-    <%= f.input :last_name %>
+    <%= f.input :last_name, disabled: true %>
     <%#div class="form-group" %>
         <%#= f.label :last_name %>
         <%#= f.text_field :last_name, class: "form-control", placeholder: "Enter your last name here" %>
@@ -22,7 +22,7 @@
         <%#= f.label :email %>
         <%#= f.email_field :email, class: "form-control", placeholder: "Enter your email here" %>
     <%#/div%>
-    <%= f.input :date_of_birth, start_year: Date.today.year - 80, end_year: Date.today.year %>
+    <%= f.input :date_of_birth, start_year: Date.today.year - 80, end_year: Date.today.year, disabled: true %>
     <%#div class="form-group" %>
         <%#= f.label :date_of_birth %>
         <%#= f.date_field :date_of_birth?, class: "form-control", placeholder: "YYYY-MM-DD" %>
@@ -37,6 +37,11 @@
         <%#= f.label :password_confirmation %>
         <%#= f.password_field :password_confirmation, class: "form-control", placeholder: "Enter your password here again!" %>
     <%#/div%>
+    <% if user_is_coach? %>
+        <%= f.input :role, collection: ["Coach", "Client"] %>
+    <% else %>
+        <%= f.input :role, disabled: true %>
+    <% end %>
     <%#br%>
     <%= f.submit "Submit", class: "btn btn-secondary bg-light text-secondary" %>
 <% end %>

@@ -22,6 +22,14 @@ class ApplicationController < ActionController::Base
 
     helper_method(:user_is_coach?)
 
+    def user_is_admin?
+        if current_user.admin === true
+            return true
+        end
+    end
+
+    helper_method(:user_is_admin?)
+
     def authenticate_user!
         unless user_signed_in?
             flash[:danger] = "You must sign in or sign up first"
