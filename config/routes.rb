@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  get("/", to: "homepage#index", as: :root)
+  get("/", to: "sessions#new", as: :root)
 
   get("/contact_us", to: "homepage#contact")
 
