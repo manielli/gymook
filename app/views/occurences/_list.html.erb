@@ -18,6 +18,7 @@
 
             </h6>
             <p>
+                
                 <% if user_is_coach? %>
                     <%= link_to(
                         "This #{occurence.gym_class.class_type}", 
@@ -31,30 +32,60 @@
                 <%= occurence.start_time.strftime("%A") %> at 
                 <%=occurence.start_time.strftime("%l:%M%P")  %> and 
                 ends at <%= occurence.end_time.strftime("%l:%M%P") %>.
+                
                 <small>
-                    <% booking = occurence.bookings.find_by(user: current_user) %>
-                    <% if booking.present? %>
-                        <%= link_to(
-                            "Cancel Booking", 
-                            booking_path(booking.id), 
-                            method: :delete, 
-                            data: {
-                                confirm: "Are you sure you want to cancel this booking?"
-                            },
-                            class: "text-secondary" 
-                        )%>
-                    <% else %>
-                        <%= link_to(
-                            "Book Class", 
-                            occurence_bookings_path(occurence.id), 
-                            method: :post, 
-                            data: {
-                                confirm: "Are you sure want to book this class?"
-                            },
-                            class: "text-secondary"
-                        )%>
+                    <% if user_is_client? %>
+                        <% booking = occurence.bookings.find_by(user: current_user) %>
+                        <% if booking.present? %>
+                            <%= link_to(
+                                "Cancel Booking", 
+                                booking_path(booking.id), 
+                                method: :delete, 
+                                data: {
+                                    confirm: "Are you sure you want to cancel this booking?"
+                                },
+                                class: "text-secondary" 
+                            )%>
+                        <% else %>
+                            <%= link_to(
+                                "Book Class", 
+                                occurence_bookings_path(occurence.id), 
+                                method: :post, 
+                                data: {
+                                    confirm: "Are you sure want to book this class?"
+                                },
+                                class: "text-secondary"
+                            )%>
+                        <% end %>
                     <% end %>
-                </small>
+                </small> <br>
+                <% if user_is_coach? %>
+                    <small>
+                        <% if occurence.active? && can?(:archive, occurence) %>
+                            <%= link_to(
+                                "Archive Occurence", 
+                                occurence_occurence_archivings_path(occurence), 
+                                method: :post, 
+                                data: { 
+                                    confirm: "Are you sure you want to archive this occurence?"
+                                }, 
+                                class: "text-secondary mb-2"
+                                ) 
+                            %>
+                        <% elsif occurence.archived? && can?(:activate, occurence) %>
+                            <%= link_to(
+                                "Activate Occurence",
+                                occurence_occurence_archivings_path(occurence),
+                                method: :post,
+                                data: {
+                                    confirm: "Are you sure you want to activate this occurence?"
+                                },
+                                class: "text-secondary mb-2"
+                                ) 
+                            %>
+                        <% end %>
+                    </small>
+                <% end %>
             </p>
         </li>
     <% end %>

@@ -10,9 +10,13 @@ Rails.application.routes.draw do
   resource :session, only: [:new, :create, :destroy]
   resources :users
 
-  resources :bookings, only: [:index]
-  
+  resources :bookings, only: [:index] do
+    resources :booking_archivings, only: [:create]
+  end
+
   resources :occurences, except: [:new, :create, :edit, :update, :destroy] do
+    resources :occurence_archivings, shallow: true, only: [:create]
+
     resources :bookings, shallow: true, only: [:create, :destroy]
 
     get :booked, on: :collection

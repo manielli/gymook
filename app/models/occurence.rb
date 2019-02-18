@@ -18,6 +18,36 @@ class Occurence < ApplicationRecord
     presence: true
   )
 
+  include AASM
+
+  aasm whiny_transitions: false do
+    state :active, initial: true
+    state :archived
+    
+    event :archive do
+      transitions from: :active, to: :archived
+    end
+    event :activate do
+      transitions from: :archive, to: :active
+    end
+  end
+
+  def self.viewable
+    self
+      .where(aasm_state: [:active])
+      .each { |occurence|
+      occurence.start_time < DateTime.current ? occurence.update(aasm_state: :archived) : nil
+      }
+
+    self.where(aasm_state: [:active])
+  end
+
+  def self.archived
+    where(aasm_state: [:archived])
+  end
+
+  scope(:recent, -> { order(created_at: :desc).limit(1000) })
+
   private
   def start_time_must_not_be_in_the_past
     if start_time.present? && start_time < DateTime.current

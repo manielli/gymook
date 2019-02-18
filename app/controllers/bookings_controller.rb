@@ -18,7 +18,7 @@ class BookingsController < ApplicationController
     end
 
     def index
-        @bookings = Booking.all.order(created_at: :desc)
+        @bookings = Booking.all.viewable.order(created_at: :desc)
     end
 
     def destroy

@@ -35,7 +35,7 @@ class OccurencesController < ApplicationController
     end
 
     def index
-        @occurences = Occurence.all.order(start_time: :asc)
+        @occurences = Occurence.all.viewable.order(start_time: :asc)
     end
 
     def destroy
@@ -64,7 +64,11 @@ class OccurencesController < ApplicationController
         end
     end
 
-    def user_is_coach?
-        current_user.present? && current_user.role == "Coach"
-    end
+    # def user_is_coach?
+    #     current_user.present? && current_user.role == "Coach"
+    # end
+
+    # def user_is_client?
+    #     current_user.present? && current_user.role == "Client"
+    # end
 end

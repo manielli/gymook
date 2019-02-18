@@ -50,7 +50,8 @@ users = User.all
             gc.occurences << Occurence.new(
                 start_time: start_time,
                 end_time: end_time,
-                user: users.sample
+                user: users.sample,
+                aasm_state: :active
             )
         end
     end
@@ -74,7 +75,8 @@ end
     occurence = occurences.sample
     rand(0..100).times do
         occurence.bookings << Booking.new(
-            user: user
+            user: user,
+            aasm_state: :active
         )
 
     end
