@@ -35,7 +35,7 @@ class OccurencesController < ApplicationController
     end
 
     def index
-        @occurences = Occurence.all.order(created_at: :desc)
+        @occurences = Occurence.all.order(start_time: :asc)
     end
 
     def destroy
@@ -43,6 +43,10 @@ class OccurencesController < ApplicationController
         redirect_to gym_class_path(@occurence.gym_class.id)
     end
 
+    def booked
+        # byebug
+        @occurences = @current_user.booked_occurences.all.order(start_time: :asc)
+    end
 
     private
     def occurence_params

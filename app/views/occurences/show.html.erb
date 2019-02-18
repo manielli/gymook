@@ -16,16 +16,19 @@
 
 <h2>Here are the bookings placed for this <%= @occurence.gym_class.class_type %> class:</h2>
 
-<% @bookings.each do |booking| %>
-    <strong> <%= booking.user.full_name %> made a booking for this class <%= time_ago_in_words(booking.created_at) %> ago </strong>
-    Cancel this users booking?
-    <%= link_to(
-            "Delete Booking", 
-            gym_class_occurence_path(@occurence.gym_class.id, @occurence.id), 
-            method: :delete, 
-            data: { 
-                confirm: "Are you sure you want to cancel this booking?"
-            }, 
-            class: "text-secondary") 
-    %>
-<% end %>
+<ul class="occurence-list" >
+    <% @bookings.each do |booking| %>
+        <li><strong> <%= link_to(booking.user.full_name, user_path(current_user.id), class: "text-secondary")%> made a booking for this class <%= time_ago_in_words(booking.created_at) %> ago </strong>
+            Cancel this users booking?
+            <%= link_to(
+                    "Delete Booking", 
+                    gym_class_occurence_path(@occurence.gym_class.id, @occurence.id), 
+                    method: :delete, 
+                    data: { 
+                        confirm: "Are you sure you want to cancel this booking?"
+                    }, 
+                    class: "text-secondary") 
+            %>
+        </li>
+    <% end %>
+</ul>

@@ -8,12 +8,12 @@
 
 GymClass.destroy_all
 User.destroy_all
+Occurence.destroy_all
+Booking.destroy_all
 
 PASSWORD = "supersecret"
 
-
-
-10.times do
+25.times do
     first_name = Faker::Name.first_name
     last_name = Faker::Name.last_name
     
@@ -29,11 +29,11 @@ end
 
 users = User.all
 
-10.times do
+100.times do
     created_at = Faker::Date.backward(365 * 2)
     
     gc = GymClass.create(
-        class_type: ["MuayHIIT", "MuayFit", "MuayThai", "Kickboxing", "Core Builder", "Zumba", "Yoga", "Spin"].sample,
+        class_type: ["MuayHIIT", "MuayFit", "MuayThai", "Kickboxing", "Core Builder", "Zumba", "Yoga", "Spin", "Baré", "MMA", "Brazilian Jiu-Jitsu"].sample,
         maximum_clients: rand(10..15),
         description: Faker::Lorem.sentence(3, true, 3),
         cost: ["20","25","15"].sample,
@@ -43,13 +43,14 @@ users = User.all
         )
         
     if gc.valid?
-        rand(0..25).times do
+        rand(0..50).times do
             start_time = Faker::Time.forward(31, :evening)
             end_time = start_time.strftime("%Y-%m-%d #{(start_time.strftime("%H").to_i+1).to_s}:%M:%S -0800")
 
             gc.occurences << Occurence.new(
                 start_time: start_time,
-                end_time: end_time
+                end_time: end_time,
+                user: users.sample
             )
         end
     end
@@ -60,7 +61,7 @@ end
     first_name = Faker::Name.first_name
     last_name = Faker::Name.last_name
     
-    User.create(
+    user = User.create(
         first_name: first_name,
         last_name: last_name,
         email: "#{first_name.downcase}-#{last_name.downcase}@#{Faker::Company.name.downcase}.com",
@@ -68,6 +69,15 @@ end
         date_of_birth: Faker::Date.birthday(18, 65).strftime("%Y-%m-%d"),
         role: "Client"
     )
+
+    occurences = Occurence.all
+    occurence = occurences.sample
+    rand(0..25).times do
+        occurence.bookings << Booking.new(
+            user: user
+        )
+
+    end
 end
 
 super_user = User.create(

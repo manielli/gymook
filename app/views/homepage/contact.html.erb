@@ -1,0 +1,19 @@
+<h3>Contact Us</h3>
+
+<div class="form-group" >
+    <%= form_tag(process_contact_path) do %>
+        <div>
+            <%= label_tag :full_name, nil, class: "control-label" %>  
+            <%= text_field_tag :full_name, nil, class: "form-control" %>
+        </div>
+        <div>
+            <%= label_tag :email, nil, class: "control-label"  %>
+            <%= email_field_tag :email, nil, class: "form-control" %>
+        </div>
+        <div>
+            <%= label_tag :message, nil, class: "control-label"  %>
+            <%= text_area_tag :message, nil, cols:50, rows: 10, class: "form-control"  %>
+        </div>
+        <%= submit_tag("Contact Us", class: "btn btn-secondary bg-light text-secondary m-5") %>
+    <% end %>
+</div>

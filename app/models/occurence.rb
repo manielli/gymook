@@ -1,11 +1,13 @@
 class Occurence < ApplicationRecord
   belongs_to :gym_class
+  belongs_to :user
+
+  has_many :bookers, through: :bookings, source: :user
+  has_many :bookings, dependent: :destroy
 
   validate :start_time_must_not_be_in_the_past, on: :create
   validate :end_time_must_not_be_before_start_time, on: :create
   
-  has_many :bookings, dependent: :destroy
-
   validates(
     :start_time,
     presence: true

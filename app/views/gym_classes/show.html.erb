@@ -47,11 +47,22 @@
         </h6>
 
         <p>
-            This <%= link_to(occurence.gym_class.class_type, gym_class_occurence_path(@gym_class.id, occurence.id), class: "text-secondary") %> 
-            class starts on 
+            <% if user_is_coach? %>
+                <%= link_to(
+                    "This #{occurence.gym_class.class_type} class", 
+                    occurence_path(occurence.id), 
+                    class: "text-secondary"
+                )%> 
+            <% else %>
+                This <%= occurence.gym_class.class_type %> class
+            <% end %>
+            starts on 
             <%= occurence.start_time.strftime("%A") %> at 
             <%=occurence.start_time.strftime("%l:%M%P")  %> and 
             ends at <%= occurence.end_time.strftime("%l:%M%P") %>.
+            <small>
+                <%= pluralize(occurence.bookings.count, "Booking") %>
+            </small>
             <small>
                 <% if can?(:delete, occurence) %>    
                         <%= link_to(

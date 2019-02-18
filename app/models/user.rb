@@ -1,8 +1,12 @@
 class User < ApplicationRecord
-    has_many :gym_classes
-    validate :date_of_birth_must_not_be_a_future_date, on: [:create]
-    has_many :bookings
+    has_many :gym_classes, dependent: :nullify
+    has_many :occurences, dependent: :nullify
 
+    has_many :bookings, dependent: :destroy
+    has_many :booked_occurences, through: :bookings, source: :occurence
+    
+    validate :date_of_birth_must_not_be_a_future_date, on: [:create]
+    
     has_secure_password
 
     validates(

@@ -42,5 +42,9 @@ class Ability
     can(:crud, Booking) do |booking|
       booking.user == user || user.role == "Coach"
     end
+
+    can(:book, Occurence) do |occurence|
+      user.persisted? && occurence.user != user
+    end
   end
 end

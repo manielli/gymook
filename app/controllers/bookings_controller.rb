@@ -6,13 +6,15 @@ class BookingsController < ApplicationController
         gym_class = occurence.gym_class
         booking = Booking.new(occurence: occurence, user: current_user)
 
-        if booking.save
-            flash[:success] = "Your class was successfully booked"
+        if !can?(:book, occurence)
+            flash[:warning] = "You can not book your own occurence."
+        elsif booking.save
+            flash[:success] = "Your class was successfully booked."
         else
             flash[:danger] = booking.errors.full_messages.join(", ")
         end
 
-        redirect_to occurences_path
+        redirect_to booked_occurences_path
     end
 
 
@@ -21,24 +23,13 @@ class BookingsController < ApplicationController
         ocuurence = booking.occurence
         gym_class = ocuurence.gym_class
 
-        booking.destroy
-        flash[:success] = "You booking was successfully cancelled"
-        redirect_to occurences_path
-    end
-
-    private
-    def booking_params
-        params.require(:booking)
-    end
-
-    def find_booking
-        @booking = Booking.find(params[:id])
-    end
-
-    def authorize_user!
-        unless can?(:crud, @booking)
-            flash[:danger] = "You are not allowed to make this booking..."
-            redirect_to occurences_path
+        if can?(:delete, booking)
+            booking.destroy
+            flash[:success] = "The booking was successfully cancelled"
+        else
+            flash[:warning] = "Can not cancel this booking, something went wrong..."
         end
+        redirect_to booked_occurences_path
     end
+
 end
