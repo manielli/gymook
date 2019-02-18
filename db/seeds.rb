@@ -72,7 +72,7 @@ end
 
     occurences = Occurence.all
     occurence = occurences.sample
-    rand(0..25).times do
+    rand(0..100).times do
         occurence.bookings << Booking.new(
             user: user
         )

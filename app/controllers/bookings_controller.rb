@@ -17,6 +17,9 @@ class BookingsController < ApplicationController
         redirect_to booked_occurences_path
     end
 
+    def index
+        @bookings = Booking.all.order(created_at: :desc)
+    end
 
     def destroy
         booking = current_user.bookings.find(params[:id])
