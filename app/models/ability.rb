@@ -30,7 +30,7 @@ class Ability
     # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
 
     alias_action(:create, :edit, :update, :delete, to: :crud)
-    alias_action(:edit, :update, to: :u)
+    # alias_action(:edit, :update, to: :u)
 
     can(:crud, GymClass) do |gym_class|
       user.role == "Coach"
@@ -52,8 +52,8 @@ class Ability
       user.role == "Coach"
     end
 
-    can(:u, User) do |user|
-      user.role == "Client"
-    end
+    # can(:u, User) do |user|
+    #   user.role == "Client"
+    # end
   end
 end
