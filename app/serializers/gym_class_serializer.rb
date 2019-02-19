@@ -2,8 +2,8 @@ class GymClassSerializer < ActiveModel::Serializer
   attributes(
     :id,
     :class_type,
-    :maximum_clients,
     :description,
+    :maximum_clients,
     :cost,
     :created_at,
     :updated_at
@@ -25,7 +25,7 @@ class GymClassSerializer < ActiveModel::Serializer
     belongs_to(:user, key: :creator_coach)
     has_many(:bookings)
 
-    class BookingSerializer < ActiveMode::Serializer
+    class BookingSerializer < ActiveModel::Serializer
       attributes(
         :id,
         :occurence_id,

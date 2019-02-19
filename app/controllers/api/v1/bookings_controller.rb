@@ -11,7 +11,7 @@ class Api::V1::BookingsController < Api::ApplicationController
         elsif booking.save!
             render json: {id: booking.id}
         else
-            render json: 
+            render json: { status: 500 }, status: 500 
         end
     end
 
