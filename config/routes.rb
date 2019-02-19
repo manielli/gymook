@@ -30,17 +30,26 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: {format: :json} do 
     namespace :v1 do
-      resources :gym_classes do
-        resources :occurences, only: [:new, :create, :index, :destroy]
-      end
-
+      
       resource :session, only: [:create, :destroy]
-
       resources :users, only: [] do
         get :current, on: :collection
       end
-    end
+      
+      resources :bookings, only: [:index]  
 
+      resources :occurences, except: [:new, :create, :edit, :update, :destroy] do
+        
+        resources :bookings, shallow: true, only: [:create, :destroy]
+
+        get :booked, on: :collection
+      end
+
+      resources :gym_classes do
+        resources :occurences, only: [:new, :create, :index, :destroy]
+      end
+    
+    end
     match "*unmatched", via: :all, to: "application#not_found"
   end
 

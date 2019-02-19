@@ -19,6 +19,11 @@ class UsersController < ApplicationController
         end
     end
 
+    def show
+        if can?(:crud, current_user) || current_user == @user
+            @user = User.find(params[:id])
+        end
+    end
     
     def index
         if can?(:crud, current_user)
@@ -28,12 +33,6 @@ class UsersController < ApplicationController
         end
     end
     
-    def show
-        if can?(:crud, current_user) || current_user == @user
-            @user = User.find(params[:id])
-        end
-    end
-
     def edit
         if can?(:crud, current_user) || current_user == @user
             @user = User.find(params[:id])
