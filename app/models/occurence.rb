@@ -33,11 +33,11 @@ class Occurence < ApplicationRecord
   end
 
   def self.viewable
-    self
-      .where(aasm_state: [:active])
-      .each { |occurence|
-      occurence.start_time < DateTime.current ? occurence.update(aasm_state: :archived) : nil
-      }
+    # self
+    #   .where(aasm_state: [:active])
+    #   .each { |occurence|
+    #   occurence.start_time < DateTime.current ? occurence.update(aasm_state: :archived) : nil
+    #   }
 
     self.where(aasm_state: [:active])
   end

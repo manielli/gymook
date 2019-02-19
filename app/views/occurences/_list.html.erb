@@ -31,7 +31,9 @@
                 starts on 
                 <%= occurence.start_time.strftime("%A") %> at 
                 <%=occurence.start_time.strftime("%l:%M%P")  %> and 
-                ends at <%= occurence.end_time.strftime("%l:%M%P") %>.
+                ends at <%= occurence.end_time.strftime("%l:%M%P") %>. This class was
+                created by Coach <%= occurence.user.full_name %> 
+                <%= time_ago_in_words(occurence.created_at) %> ago.
                 
                 <small>
                     <% if user_is_client? %>

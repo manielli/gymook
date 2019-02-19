@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
     helper_method(:user_signed_in?)
 
     def user_is_coach?
-        current_user.present? && current_user.role == "Coach"
+        current_user.present? && (current_user.role == "Coach" || current_user.admin?)
     end
 
     helper_method(:user_is_coach?)

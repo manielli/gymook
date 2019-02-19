@@ -32,39 +32,39 @@ class Ability
     alias_action(:create, :edit, :update, :delete, to: :crud)
 
     can(:crud, GymClass) do |gym_class|
-      user.role == "Coach"
+      user.role == "Coach" || user.admin?
     end
 
     can(:crud, Occurence) do |occurence|
-      user.role == "Coach"
+      user.role == "Coach" || user.admin?
     end
 
     can(:crud, Booking) do |booking|
-      booking.user == user || user.role == "Coach"
+      booking.user == user || user.role == "Coach" || user.admin?
     end
 
     can(:book, Occurence) do |occurence|
-      user.persisted? && occurence.user != user
+      (user.persisted? && occurence.user != user) || user.admin?
     end
 
     can(:crud, User) do |user|
-      user.role == "Coach"
+      user.role == "Coach" || user.admin?
     end
 
     can(:archive, Booking) do |booking|
-      user.role == "Coach"
+      user.role == "Coach" || user.admin?
     end
 
     can(:activate, Booking) do |booking|
-      user.role == "Coach"
+      user.role == "Coach" || user.admin?
     end
 
     can(:archive, Occurence) do |occurence|
-      user.role == "Coach"
+      user.role == "Coach" || user.admin?
     end
 
     can(:activate, Occurence) do |occurence|
-      user.role == "Coach"
+      user.role == "Coach" || user.admin?
     end
   end
 end
