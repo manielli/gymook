@@ -1,20 +1,25 @@
-<ul class="gym_class-list">
+<ul class="gym_class-list card-group m-5">
     <% @gym_classes.each do |gym_class| %>
-        <li>
-            <%= link_to(gym_class.class_type, gym_class_path(gym_class.id), class: "text-secondary") %>
-            <br>
-            <small>
-                Cost: $<%= gym_class.cost %>
-            </small> <br>
-            <small>
-                Maximum Clients per class: <%= gym_class.maximum_clients %>
-            </small> <br>
-            <small>
-                Created at: <%= gym_class.created_at %>
-            </small> <br>
-            <small>
-                <%= link_to("New Occurence", new_gym_class_occurence_path(gym_class.id), class: "text-secondary" ) %>
-            </small> <br> <br>
-        </li>
+        <div class="d-flex justify-content-start">
+            <div class="card p-1 m-1 text-center" style="border-radius: 10px; max-width: 20rem;" >
+                <div class="card-body">
+                    <div class="card-title" >
+                        <%= link_to(gym_class.class_type, gym_class_path(gym_class.id), class: "text-info") %>
+                    </div>
+                    <div class="card-text text-danger" >
+                        Cost: $<%= gym_class.cost %>
+                    </div> <br><br>
+                    <div class="card-text" >
+                        Maximum Clients per class: <%= gym_class.maximum_clients %>
+                    </div> <br>
+                    <div class="card-text" >
+                        Created: <%= gym_class.created_at.strftime("%Y-%m-%d") %>
+                    </div> <br>
+                    <div class="card-text"  class="card-link" >
+                        <%= link_to("New Class from this template", new_gym_class_occurence_path(gym_class.id), class: "text-success" ) %>
+                    </div>
+                </div>
+            </div>
+        </div>
     <% end %>
 </ul>

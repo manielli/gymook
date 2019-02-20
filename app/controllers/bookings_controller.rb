@@ -37,4 +37,7 @@ class BookingsController < ApplicationController
         redirect_to booked_occurences_path
     end
 
+    def archived_bookings
+        @bookings = Booking.all.archived.order(created_at: :desc)
+    end
 end

@@ -7,11 +7,14 @@
     <script src="https://js.stripe.com/v3" ></script>
     <%= stylesheet_link_tag    'application', media: 'all' %>
     <%= javascript_include_tag 'application' %>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
   </head>
   <body>
     <header>
       <nav class="navbar navbar-expand-lg navbar-light bg-light text-secondary" >
-        <a href="#" class="navbar-brand text-secondary">Logo</a>
+        <a href="/" class="navbar-brand text-secondary">
+          <i class="fas fa-atom fa-spin" ></i>
+        </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="toggle-navigation" >
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -22,35 +25,43 @@
             <%#/li%>
             <% if user_is_coach? %>
               <li class="nav-item" >
-                  <%= link_to("New Gym Class", new_gym_class_path, class: "nav-link text-secondary") %>
+                  <%= link_to("New Gym Class Template", new_gym_class_path, class: "nav-link text-secondary") %>
               </li>
               <li class="nav-item" >
-                  <%= link_to("Gym Classes", gym_classes_path, class: "nav-link text-secondary" ) %>
+                  <%= link_to("Gym Class Templates", gym_classes_path, class: "nav-link text-secondary" ) %>
               </li>
+              <%#li class="nav-item" %>
+                <%#= link_to("Add a Class", gym_classes_path , class: "nav-link text-secondary" ) %>
+              <%#/li%>
               <li class="nav-item" >
-                <%= link_to("Add a New Occurence", gym_classes_path , class: "nav-link text-secondary" ) %>
+                  <%= link_to("Classes", occurences_path, class: "text-secondary nav-link") %>
               </li>
-              <li class="nav-item" >
-                <%= link_to("All Users", users_path, class: "nav-link text-secondary" ) %>
+              <li class="nav-item">
+                <%= link_to("Archived Classes", archived_occurences_occurences_path, class: "nav-link text-secondary") %>
               </li>
               <li class="nav-item">
                 <%= link_to("Bookings", bookings_path, class: "nav-link text-secondary") %>
               </li>
-              <li class="nav-item">
-                <%= link_to("Archived Occurences", archived_occurences_occurences_path, class: "nav-link text-secondary") %>
+              <li class="nav-item" >
+                <%= link_to("Achived Bookings", archived_bookings_bookings_path, class: "nav-link text-secondary" ) %>
               </li>
             <% end %>
-            <li class="nav-item" >
-                <%= link_to("All Occurences", occurences_path, class: "text-secondary nav-link") %>
-            </li>
             <% if user_signed_in? %>
-
-                  <li class="nav-item">
-                    <%= link_to("Booked Occurences", booked_occurences_path, class: "nav-link text-secondary") %>
+              <% if !user_is_coach? %>
+                  <li class="nav-item" >
+                    <%= link_to("Classes", occurences_path, class: "text-secondary nav-link") %>
                   </li>
-              
+                  <li class="nav-item">
+                    <%= link_to("Booked Classes", booked_occurences_path, class: "nav-link text-secondary") %>
+                  </li>
+              <% end %>
+              <% if user_is_coach? %>
+                <li class="nav-item" >
+                  <%= link_to("Users Management", users_path, class: "nav-link text-secondary" ) %>
+                </li>
+              <% end %>
               <li class="nav-item" >
-                <%= link_to("Hi, #{current_user.first_name}", user_path(current_user), class: "nav-link text-secondary" ) %>
+                <%= link_to("Hi, #{current_user.first_name}", edit_user_path(current_user), class: "nav-link text-secondary" ) %>
               </li>
               <li class="nav-item" >
                 <%= link_to(

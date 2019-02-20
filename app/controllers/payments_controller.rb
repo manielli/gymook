@@ -18,7 +18,7 @@ class PaymentsController < ApplicationController
 
             @booking.update(stripe_charge_id: charge.id)
 
-            flash[:success] = "Thank you for your payment, you class is booked and payment has been processed."
+            flash[:success] = "Thank you for your payment, you class is booked and your payment has been processed."
             redirect_to booked_occurences_path
         rescue => error
             logger.error error.full_message
