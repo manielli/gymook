@@ -8,13 +8,15 @@ class BookingsController < ApplicationController
 
         if !can?(:book, occurence)
             flash[:warning] = "You can not book your own occurence."
+            redirect_to booked_occurences_path
         elsif booking.save
-            flash[:success] = "Your class was successfully booked."
+            # flash[:success] = "Your class was successfully booked."
+            redirect_to new_booking_payment_path(booking.id)
         else
             flash[:danger] = booking.errors.full_messages.join(", ")
+            redirect_to booked_occurences_path
         end
 
-        redirect_to booked_occurences_path
     end
 
     def index

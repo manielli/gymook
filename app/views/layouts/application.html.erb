@@ -4,7 +4,7 @@
     <title>Gymook</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
+    <script src="https://js.stripe.com/v3" ></script>
     <%= stylesheet_link_tag    'application', media: 'all' %>
     <%= javascript_include_tag 'application' %>
   </head>
@@ -44,11 +44,11 @@
                 <%= link_to("All Occurences", occurences_path, class: "text-secondary nav-link") %>
             </li>
             <% if user_signed_in? %>
-              <% if user_is_client? %>
+
                   <li class="nav-item">
                     <%= link_to("Booked Occurences", booked_occurences_path, class: "nav-link text-secondary") %>
                   </li>
-              <% end %>
+              
               <li class="nav-item" >
                 <%= link_to("Hi, #{current_user.first_name}", user_path(current_user), class: "nav-link text-secondary" ) %>
               </li>

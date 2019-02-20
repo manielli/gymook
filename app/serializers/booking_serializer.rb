@@ -8,4 +8,5 @@ class BookingSerializer < ActiveModel::Serializer
   )
 
   belongs_to(:user, key: :occurence_booker)
+  # belongs_to(:occurence)
 end

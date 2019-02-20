@@ -15,5 +15,4 @@ class BookingArchivingsController < ApplicationController
 
         redirect_to booked_occurences_path
     end
-
 end

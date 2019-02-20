@@ -10,4 +10,8 @@ class UserSerializer < ActiveModel::Serializer
     :role,
     :date_of_birth
   )
+
+  # has_many(:bookings)
+  # has_many(:occurences)
+  # has_many(:gym_classes)
 end

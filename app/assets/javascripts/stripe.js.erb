@@ -1,0 +1,28 @@
+const stripePublishableKey = '<%= ENV["STRIPE_PUBLISHABLE_KEY"] %>';
+const stripe = Stripe(stripePublishableKey);
+
+const elements = stripe.elements();
+const card = elements.create("card");
+
+document.addEventListener("DOMContentLoaded", () => {
+    card.mount("#card-element");
+
+    const paymentForm = document.getElementById("stripe-form");
+    const newPaymentForm = document.getElementById("new-payment-form");
+
+    paymentForm.addEventListener("submit", event => {
+    event.preventDefault();
+
+    stripe.createToken(card).then(data => {
+        const { error, token } = data;
+
+        if (error) {
+        document.getElementById("card-errors").innerText = error.messages;
+        } else {
+        console.log(token);
+        newPaymentForm.querySelector("#stripe_token").value = token.id;
+        newPaymentForm.submit();
+        }
+    });
+    });
+});

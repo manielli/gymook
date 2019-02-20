@@ -1,0 +1,20 @@
+<h1>Make a payment of <%= number_to_currency(@booking.occurence.gym_class.cost) %></h1>
+	
+<form id="stripe-form">
+    <div class="form-group">
+    <label for="card-element">Credit or debit card</label>
+    <div id="card-element">
+        <!-- A Stripe Element will be placed here! -->
+    </div>
+
+    <div id="card-errors">
+        <!-- Used to display Element errors. -->
+    </div>
+    </div>
+
+    <button type="submit">Pay</button>
+</form>
+
+<%= form_tag(booking_payments_path(@booking), id: "new-payment-form") do %>
+    <%= hidden_field_tag :stripe_token %>
+<% end %> 

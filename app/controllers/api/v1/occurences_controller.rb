@@ -1,5 +1,5 @@
 class Api::V1::OccurencesController < Api::ApplicationController
-    before_action :authenticate_user!
+    before_action :authenticate_user!, except: [:index, :show]
 
     def create
         occurence = Occurence.new occurence_params

@@ -1,6 +1,6 @@
 class OccurencesController < ApplicationController
     before_action :find_occurence, only: [:show, :destroy]
-    before_action :authenticate_user!, except: [:index]
+    before_action :authenticate_user!, except: [:index, :show]
     before_action :authorize_user!, only: [:destroy]
     # before_action :user_is_coach?, only: [:show]
 

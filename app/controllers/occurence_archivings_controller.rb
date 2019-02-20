@@ -10,7 +10,7 @@ class OccurenceArchivingsController < ApplicationController
             o.activate!
             flash[:success] = "Occurence status was set to active successfully!"
         else
-            flash[:danger] = "Access Denied"
+            flash[:danger] = "Access Denied!"
         end
 
         redirect_to occurences_path
