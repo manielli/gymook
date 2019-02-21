@@ -4,16 +4,9 @@
     <% @users.each do |user| %>
         <li>
             <strong>
-                <%= link_to(user.full_name, user_path(user.id), class: "text-secondary") %>
+                <%= link_to(user.full_name, edit_user_path(user.id), class: "text-secondary") %>
             </strong>
-            <small>
-                •
-                <%= link_to(
-                    "Edit User Details", 
-                    edit_user_path(user), 
-                    class: "text-secondary" 
-                ) %> 
-            </small>
+
             <% if user_is_admin? %>
                 •
                 <%= link_to(

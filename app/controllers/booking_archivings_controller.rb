@@ -6,13 +6,14 @@ class BookingArchivingsController < ApplicationController
         if b.active? && can?(:archive, b)
             b.archive!
             flash[:success] = "Booking was successfully archived!"
+            redirect_to archived_bookings_bookings_path
         elsif b.archived? && can?(:activate, b)
             b.activate!
             flash[:success] = "Booking status was successfully set to active!"
+            redirect_to bookings_path
         else
             flash[:danger] = "Access Denied!"
+            redirect_to bookings_path
         end
-
-        redirect_to booked_occurences_path
     end
 end
