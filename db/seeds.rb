@@ -13,7 +13,7 @@ Booking.destroy_all
 
 PASSWORD = "supersecret"
 
-25.times do
+5.times do
     first_name = Faker::Name.first_name
     last_name = Faker::Name.last_name
     
@@ -29,7 +29,7 @@ end
 
 users = User.all
 
-50.times do
+25.times do
     created_at = Faker::Date.backward(365 * 2)
     
     gc = GymClass.create(
@@ -43,7 +43,7 @@ users = User.all
         )
         
     if gc.valid?
-        rand(0..25).times do
+        rand(0..10).times do
             temp_time = Faker::Time.forward(31, :evening)
             start_time = temp_time.strftime("%Y-%m-%d %H:00:00 -0800")
             end_time = temp_time.strftime("%Y-%m-%d #{(temp_time.strftime("%H").to_i+1).to_s}:00:00 -0800")
@@ -59,7 +59,7 @@ users = User.all
 end
 
 
-100.times do
+50.times do
     first_name = Faker::Name.first_name
     last_name = Faker::Name.last_name
     
