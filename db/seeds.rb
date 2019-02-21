@@ -29,7 +29,7 @@ end
 
 users = User.all
 
-100.times do
+50.times do
     created_at = Faker::Date.backward(365 * 2)
     
     gc = GymClass.create(
@@ -43,9 +43,10 @@ users = User.all
         )
         
     if gc.valid?
-        rand(0..50).times do
-            start_time = Faker::Time.forward(31, :evening)
-            end_time = start_time.strftime("%Y-%m-%d #{(start_time.strftime("%H").to_i+1).to_s}:%M:%S -0800")
+        rand(0..25).times do
+            temp_time = Faker::Time.forward(31, :evening)
+            start_time = temp_time.strftime("%Y-%m-%d %H:00:00 -0800")
+            end_time = temp_time.strftime("%Y-%m-%d #{(temp_time.strftime("%H").to_i+1).to_s}:00:00 -0800")
 
             gc.occurences << Occurence.new(
                 start_time: start_time,
@@ -65,20 +66,20 @@ end
     user = User.create(
         first_name: first_name,
         last_name: last_name,
-        email: "#{first_name.downcase}-#{last_name.downcase}@#{Faker::Company.name.downcase}.com",
+        email: "#{first_name.downcase}-#{last_name.downcase}@gymook.com",
         password: PASSWORD,
         date_of_birth: Faker::Date.birthday(18, 65).strftime("%Y-%m-%d"),
         role: "Client"
     )
 
     occurences = Occurence.all
-    occurence = occurences.sample
-    rand(0..100).times do
+    rand(0..25).times do
+        occurence = occurences.sample
+        
         occurence.bookings << Booking.new(
             user: user,
             aasm_state: :active
         )
-
     end
 end
 

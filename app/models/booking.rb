@@ -5,11 +5,7 @@ class Booking < ApplicationRecord
 
   validates(
     :user_id,
-    presence: true,
-    uniqueness: {
-      scope: :occurence_id,
-      message: "An occurence already has a booking for this user!"
-    }
+    presence: true
   )
   validates(
     :occurence_id,
