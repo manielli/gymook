@@ -23,6 +23,10 @@ class BookingsController < ApplicationController
         @bookings = Booking.all.viewable.order(created_at: :desc)
     end
 
+    def show
+        @booking = Booking.find(params[:id])
+    end
+
     def destroy
         booking = current_user.bookings.find(params[:id])
         ocuurence = booking.occurence

@@ -20,6 +20,11 @@ class Api::V1::BookingsController < Api::ApplicationController
         render json: bookings
     end
 
+    def show
+        booking = Booking.find(params[:id])
+        render json: booking
+    end
+
     def destroy
         booking = current_user.bookings.find(params[:id])
         occurence = booking.occurence

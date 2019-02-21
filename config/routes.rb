@@ -40,7 +40,7 @@ Rails.application.routes.draw do
         get :current, on: :collection
       end
       
-      resources :bookings, only: [:index]  
+      resources :bookings, only: [:index, :show]  
 
       resources :occurences, except: [:new, :create, :edit, :update, :destroy] do
         
