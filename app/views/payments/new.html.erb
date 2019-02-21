@@ -1,26 +1,27 @@
-<h3>Your card will be charged <%= number_to_currency(@booking.occurence.gym_class.cost) %></h3>
+<div class="card-group m-5 justify-content-center">
 
-<div class="card-group m-10">
+    <div class="card" style="border-radius: 20px" >
+        <h3 class="card-title m-5" >Your card will be charged <%= number_to_currency(@booking.occurence.gym_class.cost) %></h3>
+        <form id="stripe-form" class="card-body" >
+            <div class="form-group m-5">
+                <div class="card-title">
+                    <label for="card-element">Credit or debit card</label>
+                </div>
+                
+                <div id="card-element" class="card-text" >
+                    <!-- A Stripe Element will be placed here! -->
+                </div>
 
-    <form id="stripe-form" class="card-body" >
-        <div class="form-group">
-            <div class="card-title">
-                <label for="card-element">Credit or debit card</label>
+                <div id="card-errors" class="card-text" >
+                    <!-- Used to display Element errors. -->
+                </div>
             </div>
-            
-            <div id="card-element" class="card-text" >
-                <!-- A Stripe Element will be placed here! -->
-            </div>
 
-            <div id="card-errors" class="card-text" >
-                <!-- Used to display Element errors. -->
-            </div>
-        </div>
+            <button class="btn bg-light text-secondary float-right m-5" type="submit">Pay</button>
+        </form>
+    </div>
 
-        <button class="btn bg-light text-secondary float-right`" type="submit">Pay</button>
-    </form>
+    <%= form_tag(booking_payments_path(@booking), id: "new-payment-form") do %>
+        <%= hidden_field_tag :stripe_token %>
+    <% end %> 
 </div>
-
-<%= form_tag(booking_payments_path(@booking), id: "new-payment-form") do %>
-    <%= hidden_field_tag :stripe_token %>
-<% end %> 

@@ -17,7 +17,6 @@
                         <%= occurence.start_time.strftime("%A") %> 
                         <%= occurence.start_time.strftime("%b") %>.
                         <%= occurence.start_time.strftime("%-d") %>: 
-
                     </h6>
                     <p>
                         
@@ -31,12 +30,12 @@
                             <%= occurence.gym_class.class_type %>
                         <% end %>
                         starts on 
-                        <%= occurence.start_time.strftime("%A") %> at 
-                        <%=occurence.start_time.strftime("%l:%M%P")  %> and 
-                        ends at <%= occurence.end_time.strftime("%l:%M%P") %>. This class was
+                        <%= occurence.start_time.strftime("%A") %> from 
+                        <%=occurence.start_time.strftime("%l:%M%P")  %> to 
+                        <%= occurence.end_time.strftime("%l:%M%P") %>. <br> <br> This class was
                         created by Coach <%= occurence.user.full_name %> 
-                        <%= time_ago_in_words(occurence.created_at) %> ago.
-                        <br> <br>
+                        <%= time_ago_in_words(occurence.created_at) %> ago. He/She will be teaching this class.
+                        <br>
                         <small>
                             <% if user_is_client? %>
                                 <% booking = occurence.bookings.find_by(user: current_user) %>
