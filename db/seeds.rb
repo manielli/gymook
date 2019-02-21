@@ -20,7 +20,7 @@ PASSWORD = "supersecret"
     User.create(
         first_name: first_name,
         last_name: last_name,
-        email: "#{first_name.downcase}-#{last_name.downcase}@#{Faker::Company.name.downcase}.com",
+        email: "#{first_name.downcase}-#{last_name.downcase}@gymook.com",
         password: PASSWORD,
         date_of_birth: Faker::Date.birthday(25, 40).strftime("%Y-%m-%d"),
         role: "Coach"
