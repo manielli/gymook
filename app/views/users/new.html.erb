@@ -1,0 +1,45 @@
+<%= stylesheet_link_tag 'users' %>
+
+<div class="container" id="sign-up-container">
+    <h1>Sign Up</h1>
+    <%#= form_with(model: @user, local: true) do |f| %>
+    <%= simple_form_for @user do |f| %>
+        <%# if @user.errors.any? %>
+            <%#p%>
+                <%#= @user.errors.full_messages.join(", ") %>
+            <%#/p%>
+        <%# end  %>
+        <%= f.input :first_name %>
+        <%#div class="form-group" %>
+            <%#= f.label :first_name %>
+            <%#= f.text_field :first_name, class: "form-control", placeholder: "Enter you first name here" %>
+        <%#/div%>
+        <%= f.input :last_name %>
+        <%#div class="form-group" %>
+            <%#= f.label :last_name %>
+            <%#= f.text_field :last_name, class: "form-control", placeholder: "Enter your last name here" %>
+        <%#/div%>
+        <%= f.input :email %>
+        <%#div class="form-group" %>
+            <%#= f.label :email %>
+            <%#= f.email_field :email, class: "form-control", placeholder: "Enter your email here" %>
+        <%#/div%>
+        <%= f.input :date_of_birth, start_year: (Date.today.year - 80), end_year: (Date.today.year - 18) %>
+        <%#div class="form-group" %>
+            <%#= f.label :date_of_birth %>
+            <%#= f.date_field :date_of_birth?, class: "form-control", placeholder: "YYYY-MM-DD" %>
+        <%#/div%>
+        <%= f.input :password %>
+        <%#div class="form-group" %>
+            <%#= f.label :password %>
+            <%#= f.password_field :password, class: "form-control", placeholder: "Enter your password here" %>
+        <%#/div%>
+        <%= f.input :password_confirmation %>
+        <%#div class="form-group" %>
+            <%#= f.label :password_confirmation %>
+            <%#= f.password_field :password_confirmation, class: "form-control", placeholder: "Enter your password here again!" %>
+        <%#/div%>
+        <%#br%>
+        <%= f.submit "Submit", class: "btn btn-secondary bg-light text-secondary" %>
+    <% end %>
+</div>

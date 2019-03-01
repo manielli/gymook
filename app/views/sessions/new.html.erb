@@ -1,0 +1,23 @@
+<%= stylesheet_link_tag 'sessions' %>
+
+<div class="container" id="sign-in-container" >
+
+    <h1>
+    Sign In
+    </h1>
+    <%= form_with(url: session_path, local: true) do |f| %>
+        
+            <%= f.label :email %>
+            <%= f.email_field :email, class: "form-control", style: "width: 500px" %>
+        
+
+        
+            <%= f.label :password %>
+            <%= f.password_field :password, class: "form-control", style: "width: 500px" %>
+        
+        <br>
+        <%= f.submit "Sign In", class: "btn btn-secondary bg-light text-secondary" %>
+    <% end %>
+    
+</div>
+

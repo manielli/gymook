@@ -1,0 +1,97 @@
+<ul class="occurence-list card-group m-3 justify-content-center">
+    <% @occurences.each do |occurence| %>
+        <div class="d-flex justify-content-start">
+            <div id="<%= dom_id(occurence) %>" class="card p-1 m-2" style="border-radius: 10px; max-width: 25rem;" >
+                <div class="card-body m-2">
+                    <h6 class="card-title" >
+                        <% if user_is_coach? %>
+                            <%= link_to(
+                                occurence.gym_class.class_type ,
+                                gym_class_path(occurence.gym_class.id),
+                                class: "text-secondary"
+                            )%>
+                        <% else %>
+                        <%= occurence.gym_class.class_type %>
+                        <% end %>
+                        Class on 
+                        <%= occurence.start_time.strftime("%A") %> 
+                        <%= occurence.start_time.strftime("%b") %>.
+                        <%= occurence.start_time.strftime("%-d") %>: 
+                    </h6>
+                    <p>
+                        
+                        <% if user_is_coach? %>
+                            <%= link_to(
+                                "This #{occurence.gym_class.class_type}", 
+                                occurence_path(occurence.id), 
+                                class: "text-secondary" 
+                            )%>
+                        <% else %>
+                            <%= occurence.gym_class.class_type %>
+                        <% end %>
+                        starts on 
+                        <%= occurence.start_time.strftime("%A") %> from 
+                        <%=occurence.start_time.strftime("%l:%M%P")  %> to 
+                        <%= occurence.end_time.strftime("%l:%M%P") %>. <br> <br> This class was
+                        created by Coach <%= occurence.user.full_name %> 
+                        <%= time_ago_in_words(occurence.created_at) %> ago. He/She will be teaching this class.
+                        <br>
+                        <small>
+                            <% if user_is_client? %>
+                                <% booking = occurence.bookings.find_by(user: current_user) %>
+                                <% if booking.present? %>
+                                    <%= link_to(
+                                        "Cancel Booking", 
+                                        booking_path(booking.id), 
+                                        method: :delete, 
+                                        data: {
+                                            confirm: "Are you sure you want to cancel this booking? You will not be refunded right away. Please visit a coach staff at the gym to receive a refund where eligible."
+                                        },
+                                        class: "btn btn-small bg-light text-secondary" 
+                                    )%>
+                                <% else %>
+                                    <%= link_to(
+                                        "Book Class", 
+                                        occurence_bookings_path(occurence.id), 
+                                        method: :post, 
+                                        data: {
+                                            confirm: "Are you sure want to book this class?"
+                                        },
+                                        class: "btn btn-small bg-light text-secondary"
+                                    )%>
+                                <% end %>
+                            <% end %>
+                        </small> <br>
+                        <% if user_is_coach? %>
+                            <small>
+                                <% if occurence.active? && can?(:archive, occurence) %>
+                                    <%= link_to(
+                                        "Archive Occurence", 
+                                        occurence_occurence_archivings_path(occurence), 
+                                        method: :post, 
+                                        data: { 
+                                            confirm: "Are you sure you want to archive this occurence?"
+                                        }, 
+                                        class: "text-secondary mb-2"
+                                        ) 
+                                    %>
+                                <% elsif occurence.archived? && can?(:activate, occurence) %>
+                                    <%= link_to(
+                                        "Activate Occurence",
+                                        occurence_occurence_archivings_path(occurence),
+                                        method: :post,
+                                        data: {
+                                            confirm: "Are you sure you want to activate this occurence?"
+                                        },
+                                        class: "text-secondary mb-2"
+                                        ) 
+                                    %>
+                                <% end %>
+                            </small>
+                        <% end %>
+                    </p>
+                </div>
+            </div>
+        </div>
+    <% end %>
+</ul>

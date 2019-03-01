@@ -1,0 +1,30 @@
+<%#= form_with(model: @gym_class, local: true) do |f| %>
+<%= simple_form_for @gym_class do |f| %>
+    <%# if @gym_class.errors.present? %>
+        <%#p class="form-errors" %>
+            <%#= @gym_class.errors.full_messages.join(", ") %>
+        <%#/p%>
+    <%# end %>
+    <%= f.input :class_type %>
+    <%#div%>
+        <%#= f.label :class_type, class: "control-label" %> <br>
+        <%#= f.text_field :class_type, class: "form-control", placeholder: "Name the class you want to create" %>
+    <%#/div%>
+    <%= f.input :description %>
+    <%#div%>
+        <%#= f.label :description, class: "control-label" %> <br>
+        <%#= f.text_area :description, cols: 50, rows: 10, class: "form-control" %>
+    <%#/div%>
+    <%= f.input :maximum_clients %>
+    <%#div%>
+        <%#= f.label :maximum_clients, class: "control-label" %> <br>
+        <%#= f.text_field :maximum_clients, class: "form-control" %>
+    <%#/div%>
+    <%= f.input :cost  %>
+    <%#div%>
+        <%#= f.label :cost, class: "control-label" %> <br>
+        <%#= f.text_field :cost, class: "form-control" %>
+    <%#/div%>
+
+    <%= f.submit "Create Gym Class", class: "m-2 btn btn-secondary bg-light text-secondary" %>
+<% end %>

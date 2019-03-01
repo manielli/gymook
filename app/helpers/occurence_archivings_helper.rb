@@ -1,0 +1,2 @@
+module OccurenceArchivingsHelper
+end

@@ -1,0 +1,34 @@
+<h1>
+    The <%= @occurence.gym_class.class_type %> on 
+    <%= @occurence.start_time.strftime("%A") %> 
+    <%= @occurence.start_time.strftime("%b") %>.
+    <%= @occurence.start_time.strftime("%-d") %>: 
+
+</h1>
+
+<p>
+    This <%= @occurence.gym_class.class_type %> class starts on 
+    <%= @occurence.start_time.strftime("%A") %> 
+    <%=@occurence.start_time.strftime("%l:%M%P")  %> and 
+    ends at <%= @occurence.end_time.strftime("%l:%M%P") %>.
+</p>
+
+
+<h2>Here are the bookings placed for this <%= @occurence.gym_class.class_type %> class:</h2>
+
+<ul class="occurence-list" >
+    <% @bookings.each do |booking| %>
+        <li><strong> <%= link_to(booking.user.full_name, user_path(current_user.id), class: "text-secondary")%> made a booking for this class <%= time_ago_in_words(booking.created_at) %> ago </strong>
+            Cancel this users booking?
+            <%= link_to(
+                    "Delete Booking", 
+                    gym_class_occurence_path(@occurence.gym_class.id, @occurence.id), 
+                    method: :delete, 
+                    data: { 
+                        confirm: "Are you sure you want to cancel this booking?"
+                    }, 
+                    class: "text-secondary") 
+            %>
+        </li>
+    <% end %>
+</ul>
