@@ -157,7 +157,8 @@ GEM
     public_suffix (3.0.3)
     puma (3.12.0)
     rack (2.0.6)
-    rack-cors (1.0.2)
+    rack-cors (1.1.1)
+      rack (>= 2.0.0)
     rack-protection (2.0.5)
       rack
     rack-test (1.1.0)
@@ -303,7 +304,7 @@ DEPENDENCIES
   pry
   pry-rails
   puma (~> 3.11)
-  rack-cors
+  rack-cors (>= 1.0.5)
   rails (~> 5.2.2)
   rails-controller-testing
   react-rails
@@ -320,7 +321,7 @@ DEPENDENCIES
   web-console (>= 3.3.0)
 
 RUBY VERSION
-   ruby 2.5.1p57
+   ruby 2.7.0p0
 
 BUNDLED WITH
-   1.17.2
+   2.1.2
