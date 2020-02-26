@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.5.1'
+ruby '2.7.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.2'
@@ -43,7 +43,7 @@ gem 'selectize-rails'
 gem 'delayed_job_active_record'
 gem 'delayed_job_web'
 gem 'active_model_serializers'
-gem 'rack-cors'
+gem 'rack-cors', '>= 1.0.5'
 gem 'react-rails'
 gem 'simple_form'
 gem 'tzinfo'
