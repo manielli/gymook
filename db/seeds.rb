@@ -29,7 +29,7 @@ end
 
 users = User.all
 
-25.times do
+50.times do
     created_at = Faker::Date.backward(365 * 2)
     
     gc = GymClass.create(
@@ -44,7 +44,7 @@ users = User.all
         
     if gc.valid?
         rand(0..10).times do
-            temp_time = Faker::Time.forward(31, :evening)
+            temp_time = Faker::Time.between_dates(from: Date.today, to: Date.today + 180, period: :evening)
             start_time = temp_time.strftime("%Y-%m-%d %H:00:00 -0800")
             end_time = temp_time.strftime("%Y-%m-%d #{(temp_time.strftime("%H").to_i+1).to_s}:00:00 -0800")
 
