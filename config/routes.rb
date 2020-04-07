@@ -36,7 +36,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       
       resource :session, only: [:create, :destroy]
-      resources :users, only: [] do
+      resources :users, only: [:create, :show, :index, :update, :destroy] do
         get :current, on: :collection
       end
       
