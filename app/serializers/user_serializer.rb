@@ -8,6 +8,7 @@ class UserSerializer < ActiveModel::Serializer
     :created_at,
     :updated_at,
     :role,
+    :admin,
     :date_of_birth
   )
 
