@@ -10,7 +10,7 @@ class Api::V1::UsersController < Api::ApplicationController
         user.role = "Client"
         if user.save!
             session[:user_id] = user.id
-            render json: { status: 200 }, status: 200
+            render json: { status: 200, user: ActiveModelSerializers::SerializableResource.new(user).as_json }, status: 200
         else
             render json: { status: 403 }, status: 403
         end
@@ -19,14 +19,14 @@ class Api::V1::UsersController < Api::ApplicationController
     def show
         if can?(:crud, current_user) || current_user == user
             user = User.find(params[:id])
-            render json: { id: user.id, status: 200 }, status: 200
+            render json: { user: ActiveModelSerializers::SerializableResource.new(user).as_json }
         end
     end
 
     def index
         if can?(:crud, current_user)
             users = User.all.order(first_name: :asc)
-            render json: { users: users, status: 200 }, status: 200
+            render json: { users: ActiveModelSerializers::SerializableResource.new(users).as_json }
         else
             render json: { status: 403 }, status: 403
         end
@@ -35,7 +35,7 @@ class Api::V1::UsersController < Api::ApplicationController
     def update
         if can?(:crud, current_user) || current_user == user
             if user.update user_params
-                render json: { id: user.id, status: 200 }, status: 200
+                render json: { user: ActiveModelSerializers::SerializableResource.new(user).as_json }
             else
                 render json: { status: 400 }, status: 400
             end

@@ -4,7 +4,7 @@ class Api::V1::SessionsController < Api::ApplicationController
 
         if user&.authenticate(params[:password])
             session[:user_id] = user.id
-            render json: { id: user.id, status: 200 }, status: 200
+            render json: { status: 200, user: ActiveModelSerializers::SerializableResource.new(user).as_json }, status: 200
         else
             render json: { status: 404 }, status: 404
         end
